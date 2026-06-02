@@ -240,6 +240,19 @@ public class FenetreSimulationAutomatique extends JFrame {
         JPanel cmdPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 14, 0));
         cmdPanel.setOpaque(false);
 
+        JPanel BoutonRecommencer = new JPanel(new FlowLayout(FlowLayout.CENTER, 14, 0));
+        BoutonRecommencer.setOpaque(false);
+
+        JLabel BoutonRecommencerTitle = new JLabel("Recommencer");
+        BoutonRecommencer.setFont(FONT_H2);
+        BoutonRecommencer.setBackground(BG_PANEL);
+
+        JPanel Sortir = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
+        Sortir.setOpaque(false);
+        Sortir.setBackground(BG_PANEL);
+        Sortir.add(BoutonRecommencerTitle);
+
+
         JLabel cmdLabel = new JLabel("CMD ›");
         cmdLabel.setFont(FONT_H2);
         cmdLabel.setForeground(ACCENT);
@@ -271,13 +284,20 @@ public class FenetreSimulationAutomatique extends JFrame {
         btnPanel.add(btnValider);
         btnPanel.add(btnTour);
 
-        labelStatus = new JLabel("Système prêt.");
-        labelStatus.setFont(FONT_LABEL);
-        labelStatus.setForeground(ACCENT3);
+
+
 
         footer.add(cmdPanel, BorderLayout.WEST);
         footer.add(btnPanel, BorderLayout.EAST);
         footer.add(labelStatus, BorderLayout.SOUTH);
+
+        btnPanel.removeAll();
+        cmdPanel.removeAll();
+
+        btnPanel.revalidate();
+        btnPanel.repaint();
+        cmdPanel.revalidate();
+        cmdPanel.repaint();
 
         return footer;
     }
@@ -624,6 +644,8 @@ public class FenetreSimulationAutomatique extends JFrame {
 
     private void executerAction() {
         Robot r = (Robot) comboRobots.getSelectedItem();
+
+
 
         if (r == null) {
             return;
