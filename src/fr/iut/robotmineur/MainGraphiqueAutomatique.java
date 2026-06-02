@@ -32,7 +32,7 @@ public class MainGraphiqueAutomatique {
 
 
         SwingUtilities.invokeLater(() -> {
-            FenetreSimulationSwing fenetre = new FenetreSimulationSwing(monde);
+            FenetreSimulationAutomatique fenetre = new FenetreSimulationAutomatique(monde);
             fenetre.setVisible(true);
         });
     }

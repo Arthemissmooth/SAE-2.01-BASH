@@ -3,11 +3,14 @@ package fr.iut.robotmineur;
 import assets.AssetManager;
 
 import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
 import java.awt.*;
-import java.awt.event.*;
 
-public class FenetreSimulationSwing extends JFrame {
+public class FenetreSimulationAutomatique extends JFrame {
+
 
     private static final Color BG_DARK      = new Color(10, 14, 26);
     private static final Color BG_PANEL     = new Color(0, 20, 42);
@@ -39,12 +42,26 @@ public class FenetreSimulationSwing extends JFrame {
     private JComboBox<Direction> comboDirections;
 
     private Robot robotActif;
+    private Timer timerSimulation;
+    private int delaiEntrerTours = 1000 ;
+    private SimulationAutomatique simulationAutomatique;
 
-
-    public FenetreSimulationSwing(Monde monde) {
+    public FenetreSimulationAutomatique(Monde monde) {
         this.monde = monde;
 
+        this.simulationAutomatique = new SimulationAutomatique(monde);
 
+        this.timerSimulation = new Timer(delaiEntrerTours, e -> {
+
+            if (simulationAutomatique.estTerminee()) {
+                timerSimulation.stop();
+                setStatus("Simulation terminée : toutes les mines sont vides.");
+                return;
+            }
+
+            simulationAutomatique.jouerTour();
+            rafraichir();
+        });
 
         setTitle("robots mineurs Simulateur");
         setSize(1380, 900);
@@ -57,7 +74,7 @@ public class FenetreSimulationSwing extends JFrame {
         add(buildHeader(), BorderLayout.NORTH);
         add(buildCenter(), BorderLayout.CENTER);
         add(buildFooter(), BorderLayout.SOUTH);
-
+        timerSimulation.start();
 
         rafraichir();
     }
@@ -223,6 +240,19 @@ public class FenetreSimulationSwing extends JFrame {
         JPanel cmdPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 14, 0));
         cmdPanel.setOpaque(false);
 
+        JPanel BoutonRecommencer = new JPanel(new FlowLayout(FlowLayout.CENTER, 14, 0));
+        BoutonRecommencer.setOpaque(false);
+
+        JLabel BoutonRecommencerTitle = new JLabel("Recommencer");
+        BoutonRecommencer.setFont(FONT_H2);
+        BoutonRecommencer.setBackground(BG_PANEL);
+
+        JPanel Sortir = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
+        Sortir.setOpaque(false);
+        Sortir.setBackground(BG_PANEL);
+        Sortir.add(BoutonRecommencerTitle);
+
+
         JLabel cmdLabel = new JLabel("CMD ›");
         cmdLabel.setFont(FONT_H2);
         cmdLabel.setForeground(ACCENT);
@@ -254,13 +284,27 @@ public class FenetreSimulationSwing extends JFrame {
         btnPanel.add(btnValider);
         btnPanel.add(btnTour);
 
-        labelStatus = new JLabel("Système prêt.");
-        labelStatus.setFont(FONT_LABEL);
-        labelStatus.setForeground(ACCENT3);
+
+
+
+
 
         footer.add(cmdPanel, BorderLayout.WEST);
         footer.add(btnPanel, BorderLayout.EAST);
+
+        labelStatus = new JLabel("› Système initialisé");
+        labelStatus.setFont(FONT_LABEL);
+        labelStatus.setForeground(ACCENT3);
+        labelStatus.setBorder(new EmptyBorder(10, 5, 0, 5));
         footer.add(labelStatus, BorderLayout.SOUTH);
+
+        btnPanel.removeAll();
+        cmdPanel.removeAll();
+
+        btnPanel.revalidate();
+        btnPanel.repaint();
+        cmdPanel.revalidate();
+        cmdPanel.repaint();
 
         return footer;
     }
@@ -366,7 +410,7 @@ public class FenetreSimulationSwing extends JFrame {
 
     private JPanel creerCase(Secteur secteur, int row, int col) {
 
-        CasePanel panel = new CasePanel(
+        FenetreSimulationAutomatique.CasePanel panel = new FenetreSimulationAutomatique.CasePanel(
                 secteur.estEau() ? AssetManager.EAU : AssetManager.TERRAIN
         );
 
@@ -396,7 +440,7 @@ public class FenetreSimulationSwing extends JFrame {
         if (secteur.getMine() != null) {
             boolean or = secteur.getMine().getTypeMinerai() == TypeMinerai.OR;
 
-            panel = new CasePanel(or ? AssetManager.MINEOR : AssetManager.MINENICKEL);
+            panel = new FenetreSimulationAutomatique.CasePanel(or ? AssetManager.MINEOR : AssetManager.MINENICKEL);
             panel.setActif(actif);
             panel.setLayout(new BorderLayout());
 
@@ -607,6 +651,8 @@ public class FenetreSimulationSwing extends JFrame {
 
     private void executerAction() {
         Robot r = (Robot) comboRobots.getSelectedItem();
+
+
 
         if (r == null) {
             return;
