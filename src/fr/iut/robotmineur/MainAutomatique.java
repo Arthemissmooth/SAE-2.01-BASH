@@ -1,7 +1,6 @@
 package fr.iut.robotmineur;
 
-public class
-MainAutomatique {
+public class MainAutomatique {
 
     public static void main(String[] args) {
 
@@ -12,16 +11,24 @@ MainAutomatique {
         AffichageConsole affichage = new AffichageConsole();
         SimulationAutomatique simulation = new SimulationAutomatique(monde);
 
-        for (int i = 0; i < 30; i++) {
+        while (!simulation.estTerminee()) {
 
             affichage.afficherMonde(monde);
 
             simulation.jouerTour();
 
-            System.out.println("Appuyez sur Entrée pour continuer...");
-            new java.util.Scanner(System.in).nextLine();
+            try {
+                Thread.sleep(1000);
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
-        System.out.println("Fin de la simulation automatique.");
+        affichage.afficherMonde(monde);
+
+        System.out.println();
+        System.out.println("Simulation terminée !");
+        System.out.println("Toutes les mines sont vides.");
     }
 }

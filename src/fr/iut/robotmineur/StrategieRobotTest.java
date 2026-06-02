@@ -9,12 +9,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StrategieRobotTest {
 
-
     @Test
     void testTrouverEntrepotDuBonType() {
         Monde monde = new Monde();
-
-
         Robot robot = new RobotOr(
                 1,
                 "Robot OR",
@@ -22,24 +19,18 @@ class StrategieRobotTest {
                 5,
                 2
         );
-
-
         Entrepot entrepotOr = new Entrepot(
                 1,
                 new Position(2, 2),
                 TypeMinerai.OR
         );
 
-
         monde.ajouterRobot(robot);
         monde.ajouterEntrepot(entrepotOr);
 
-
         StrategieRobot strategie = new StrategieRobot();
 
-
         Entrepot resultat = strategie.trouverEntrepot(robot, monde);
-
 
         assertEquals(entrepotOr, resultat);
     }
