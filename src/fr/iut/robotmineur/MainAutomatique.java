@@ -1,6 +1,7 @@
 package fr.iut.robotmineur;
 
-public class MainAutomatique {
+public class
+MainAutomatique {
 
     public static void main(String[] args) {
 
