@@ -287,8 +287,15 @@ public class FenetreSimulationAutomatique extends JFrame {
 
 
 
+
+
         footer.add(cmdPanel, BorderLayout.WEST);
         footer.add(btnPanel, BorderLayout.EAST);
+
+        labelStatus = new JLabel("› Système initialisé");
+        labelStatus.setFont(FONT_LABEL);
+        labelStatus.setForeground(ACCENT3);
+        labelStatus.setBorder(new EmptyBorder(10, 5, 0, 5));
         footer.add(labelStatus, BorderLayout.SOUTH);
 
         btnPanel.removeAll();
