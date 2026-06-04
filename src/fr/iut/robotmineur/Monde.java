@@ -105,6 +105,35 @@ public class Monde {
 
         ajouterRobot(robotOr);
         ajouterRobot(robotNickel);
+
+        int nbRobots = 2 + random.nextInt(2);
+
+        if (nbRobots == 3) {
+
+            int typeRobot = random.nextInt(2);
+
+            if (typeRobot == 0) {
+                Robot robotOr2 = new RobotOr(
+                        3,
+                        nomRobotOr + " 2",
+                        positionLibrePourRobot(random),
+                        5 + random.nextInt(5),
+                        1 + random.nextInt(3)
+                );
+
+                ajouterRobot(robotOr2);
+            } else {
+                Robot robotNickel2 = new RobotNickel(
+                        3,
+                        nomRobotNickel + " 2",
+                        positionLibrePourRobot(random),
+                        5 + random.nextInt(5),
+                        1 + random.nextInt(3)
+                );
+
+                ajouterRobot(robotNickel2);
+            }
+        }
     }
 
     private Position positionLibrePourEau(Random random) {
