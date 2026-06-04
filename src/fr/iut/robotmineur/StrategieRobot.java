@@ -30,7 +30,9 @@ public class StrategieRobot {
     public Mine trouverMine(Robot robot, Monde monde) {
 
         Mine meilleureMine = null;
-        int meilleureDistance = Integer.MAX_VALUE;
+        int meilleurScore = Integer.MAX_VALUE;
+
+        Entrepot entrepot = trouverEntrepot(robot, monde);
 
         for (Mine mine : monde.getMines()) {
 
@@ -42,16 +44,31 @@ public class StrategieRobot {
                 continue;
             }
 
-            int distance = calculerDistance(robot.getPosition(), mine.getPosition());
+            int distanceRobotMine = calculerDistance(
+                    robot.getPosition(),
+                    mine.getPosition()
+            );
 
-            if (distance < meilleureDistance) {
-                meilleureDistance = distance;
+            int distanceMineEntrepot = 0;
+
+            if (entrepot != null) {
+                distanceMineEntrepot = calculerDistance(
+                        mine.getPosition(),
+                        entrepot.getPosition()
+                );
+            }
+
+            int score = distanceRobotMine + distanceMineEntrepot;
+
+            if (score < meilleurScore) {
+                meilleurScore = score;
                 meilleureMine = mine;
             }
         }
 
         return meilleureMine;
     }
+
 
     public Entrepot trouverEntrepot(Robot robot, Monde monde) {
 
