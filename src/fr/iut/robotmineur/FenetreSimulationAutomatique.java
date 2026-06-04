@@ -568,7 +568,7 @@ public class FenetreSimulationAutomatique extends JFrame {
     private JPanel buildRobotCard(Robot r) {
         boolean isOr = r.getTypeMinerai() == TypeMinerai.OR;
 
-        JPanel card = buildBaseCard(ACCENT);
+        JPanel card = buildBaseCard(isOr ? ACCENT2 : ACCENT);
 
         JLabel texte = new JLabel(
                 "Robot #" + r.getId()
