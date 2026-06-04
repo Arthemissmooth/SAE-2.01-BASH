@@ -43,7 +43,7 @@ public class FenetreSimulationAutomatique extends JFrame {
 
     private Robot robotActif;
     private Timer timerSimulation;
-    private int delaiEntrerTours = 1000 ;
+    private int delaiEntrerTours = 4500 ;
     private SimulationAutomatique simulationAutomatique;
     private boolean simulationTerminee = false;
     private JLabel labelFinSimulation;
