@@ -45,6 +45,8 @@ public class FenetreSimulationAutomatique extends JFrame {
     private Timer timerSimulation;
     private int delaiEntrerTours = 1000 ;
     private SimulationAutomatique simulationAutomatique;
+    private boolean simulationTerminee = false;
+    private JLabel labelFinSimulation;
 
     public FenetreSimulationAutomatique(Monde monde) {
         this.monde = monde;
@@ -55,7 +57,11 @@ public class FenetreSimulationAutomatique extends JFrame {
 
             if (simulationAutomatique.estTerminee()) {
                 timerSimulation.stop();
+
+                labelFinSimulation.setText("SIMULATION TERMINÉE");
+
                 setStatus("Simulation terminée : toutes les mines sont vides.");
+
                 return;
             }
 
@@ -130,7 +136,13 @@ public class FenetreSimulationAutomatique extends JFrame {
                 new EmptyBorder(6, 16, 6, 16)
         ));
 
+        labelFinSimulation = new JLabel("");
+        labelFinSimulation.setFont(new Font("Courier New", Font.BOLD, 28));
+        labelFinSimulation.setForeground(ACCENT2);
+        labelFinSimulation.setHorizontalAlignment(SwingConstants.CENTER);
+
         header.add(left, BorderLayout.WEST);
+        header.add(labelFinSimulation, BorderLayout.CENTER);
         header.add(labelTour, BorderLayout.EAST);
 
         return header;
@@ -487,6 +499,7 @@ public class FenetreSimulationAutomatique extends JFrame {
 
         @Override
         protected void paintComponent(Graphics g) {
+
             super.paintComponent(g);
 
             Graphics2D g2 = (Graphics2D) g.create();
