@@ -106,8 +106,7 @@ public class Monde {
         ajouterRobot(robotOr);
         ajouterRobot(robotNickel);
 
-        int nbRobots = 2 + random.nextInt(2);
-
+        int nbRobots = 3;
         if (nbRobots == 3) {
 
             int typeRobot = random.nextInt(2);
