@@ -21,7 +21,6 @@ public class SimulationAutomatique {
             return;
         }
 
-
         for (Robot robot : monde.getRobots()) {
             jouerRobot(robot);
         }
@@ -29,7 +28,6 @@ public class SimulationAutomatique {
 
         monde.tourSuivant();
     }
-
 
     private void jouerRobot(Robot robot) {
         Secteur secteurActuel = monde.getSecteur(robot.getPosition());
@@ -67,9 +65,6 @@ public class SimulationAutomatique {
         avancerVers(robot, objectif);
     }
 
-
-
-
     private void avancerVers(Robot robot, Position cible) {
         List<Position> chemin = planificateurChemin.calculerChemin(
                 monde,
@@ -90,7 +85,6 @@ public class SimulationAutomatique {
             monde.deplacerRobot(robot, direction);
         }
     }
-
 
     private void eloignerDuDepot(Robot robot, Position posDepot) {
         Position sortie = trouverCaseEloignee(robot.getPosition(), posDepot);
@@ -167,11 +161,6 @@ public class SimulationAutomatique {
 
         return true;
     }
-
-
-
-
-
 
     private int distanceManhattan(Position a, Position b) {
         return Math.abs(a.getLigne() - b.getLigne())

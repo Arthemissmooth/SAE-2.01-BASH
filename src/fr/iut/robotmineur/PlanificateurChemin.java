@@ -20,8 +20,9 @@ public class PlanificateurChemin {
 
             CaseChemin courant = trouverMeilleureCase(ouverts);
 
+            //Si la case courante est l'arrivée, on a trouvé le chemin.
             if (memePosition(courant.getPosition(), arrivee)) {
-                return reconstruireChemin(courant);
+                return reconstruireChemin(courant);  //On remonte les parents pour le reconstruire et on retourne le résultat.
             }
 
             ouverts.remove(courant);
@@ -29,10 +30,11 @@ public class PlanificateurChemin {
 
             for (Position voisin : getVoisins(courant.getPosition())) {
 
-                if (!monde.positionValide(voisin)) {
+                if (!monde.positionValide(voisin)) {//Si le voisin est en dehors de la grille 10x10, on l'ignore.
                     continue;
                 }
 
+            // Si le voisin est une case eau ou occupée par un autre robot, on l'ignore
                 if (!positionAccessible(monde, voisin, arrivee)) {
                     continue;
                 }
@@ -45,6 +47,7 @@ public class PlanificateurChemin {
 
                 CaseChemin caseVoisine = trouverCase(ouverts, voisin);
 
+                //Si le voisin n'est pas encore dans la liste ouverte, on le crée avec son g, h, et son parent, et on l'ajoute
                 if (caseVoisine == null) {
                     caseVoisine = new CaseChemin(voisin);
                     caseVoisine.setParent(courant);
@@ -120,6 +123,8 @@ public class PlanificateurChemin {
                 && a.getColonne() == b.getColonne();
     }
 
+//On part de l'arrivée et on remonte de parent en parent jusqu'au départ.
+// Le chemin.add(0,...) insère chaque position au début de la liste
     private List<Position> reconstruireChemin(CaseChemin arrivee) {
         List<Position> chemin = new ArrayList<>();
 
